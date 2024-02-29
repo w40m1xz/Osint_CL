@@ -1,29 +1,45 @@
-#!/usr/bin/python3
-
 import requests
+import stem
+import stem.connection
+from stem import Signal
+from stem.control import Controller
+from bs4 import BeautifulSoup
 
-import requests
+# Función para cambiar la dirección IP utilizando Tor
+def cambiar_direccion_ip():
+    try:
+        with Controller.from_port(port=9051) as controller:
+            controller.authenticate()  # Autenticar con el controlador de Tor
+            controller.signal(Signal.NEWNYM)  # Enviar señal para obtener nueva identidad
 
-# URL a la que deseas enviar la solicitud POST
-url = 'https://www.nombrerutyfirma.com/rut'
+        print("Dirección IP cambiada exitosamente a través de Tor.")
+    except stem.SocketError as e:
+        print(f"Error de conexión con el controlador de Tor: {e}")
 
-# Datos a enviar en la solicitud POST
-data = {
-    'term': 'xx.xxx.xxx-k'  # Puedes cambiar este rut por cualquier otro que desees buscar
-}
+# Configuración de la conexión a través de Tor
+session = requests.session()
+session.proxies = {'http': 'socks5h://localhost:9050', 'https': 'socks5h://localhost:9050'}
 
-# Cabeceras de la solicitud POST
+# URL a la que deseas enviar la solicitud GET para verificar la dirección IP
+url = 'https://api.ipify.org/'
 
-
-# Realizar la solicitud POST
-response = requests.post(url, data=data,)
+# Realizar la solicitud GET para verificar la dirección IP actual
+response = session.get(url)
 
 # Verificar si la solicitud fue exitosa (código de estado 200)
 if response.status_code == 200:
-    print("Solicitud exitosa!")
-    
-    # Mostrar el contenido de la respuesta
-    print("Contenido de la respuesta:")
-    print(response.text)  # Opcionalmente, puedes usar response.content para obtener los bytes de la respuesta
+    print("Dirección IP actual:", response.text.strip())
 else:
-    print("Error al realizar la solicitud:", response.status_code)
+    print("Error al obtener la dirección IP:", response.status_code)
+
+# Cambiar la dirección IP utilizando Tor
+cambiar_direccion_ip()
+
+# Realizar una nueva solicitud GET para verificar la dirección IP después del cambio
+response = session.get(url)
+
+# Verificar si la solicitud fue exitosa (código de estado 200)
+if response.status_code == 200:
+    print("Nueva dirección IP:", response.text.strip())
+else:
+    print("Error al obtener la nueva dirección IP:", response.status_code)
