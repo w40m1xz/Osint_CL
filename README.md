@@ -12,3 +12,5 @@ Te descargar la ultima version
 te vas dentro de los archivos
 
 ![image](https://github.com/P1p3xz/Osint_CL1.1/assets/154865378/0d3c5420-7ead-426a-8b32-e5c63f42abdb)
+
+lo abres en cmd donde estamos ahora
