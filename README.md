@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Bienvenido
 
 ## Osint_CL1.1 Guía para conectarse a Tor en Windows
@@ -38,3 +39,6 @@ sudo service tor start
 sudo service tor status
 
 y lo mismoo!!
+=======
+# Osint_CL1.1
+>>>>>>> 690e38e88db273bbc8950845fbe44359637821c6
