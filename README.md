@@ -2,6 +2,7 @@
 # Bienvenido
 
 ## Osint_CL1.1 Guía para conectarse a Tor en Windows
+![image](https://github.com/w40m1xz/Osint_CL1.1/assets/154865378/9b95e119-cad8-4d0d-b07a-0e937b4d93aa)
 
 Ir a [https://www.torproject.org/es/download/tor/](https://www.torproject.org/es/download/tor/)
 
