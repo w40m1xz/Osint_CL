@@ -2,24 +2,31 @@
 import random
 import time
 import os
+import signal
+import sys
+
+from termcolor import colored
 #Progama 2.0
 
 
 #  Funciones
 
-# Salir
-def salir():
-    print("Presiona Enter para avanzar. Para salir, presiona Enter nuevamente.")
-    while True:
-        input("Presiona Enter para avanzar...")
-        decision = input("¿Quieres salir? (Sí/No): ").lower()
-        if decision == "sí" or decision == "si":
-            print("Saliendo del programa.")
-            break
 
 #limpiar pantalla
 def limpiar_pantalla():
-    os.system('cls')
+     sistema_operativo = os.name
+     if sistema_operativo == 'nt':  # Windows
+        os.system('cls')
+     else:  # Unix/Linux/MacOS
+        os.system('clear')
+
+# ctrl + c
+def def_handler(sig, frame):
+    print(colored(f"\n\n[!]Saliendo...\n",'red'))
+    sys.exit(0)
+
+# Asociar el manejador de señal a la señal SIGINT (Ctrl + C)
+signal.signal(signal.SIGINT, def_handler)
 
 
 # Menu Principal
@@ -175,9 +182,10 @@ def main():
         if opcion == "1":
             print("Has seleccionado la Opción 1.")
             limpiar_pantalla()
-            time.sleep(1)
+            time.sleep(0.8)
             print("Tu número generado al azar es", numero_aleatorio())
-
+            time.sleep(7)
+            limpiar_pantalla()
         # Opción 2: Elegir un RUT con parámetros
         elif opcion == "2":
             pass  # Implementa la lógica para esta opción aquí
