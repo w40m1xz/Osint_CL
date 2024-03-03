@@ -1,14 +1,10 @@
 import requests
-import socks
-import socket
 from bs4 import BeautifulSoup
 
-# Configurar el proxy SOCKS5 para las solicitudes HTTP
-socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", 9050)  # Puerto predeterminado de Tor
-socket.socket = socks.socksocket
 
+# con el sitio rutificador 
 # URL a la que deseas enviar la solicitud POST
-url = 'https://www.nombrerutyfirma.com/'
+url = 'https://www.nombrerutyfirma.com/rut'
 
 input_save = input("Ingresa el RUT que quieres: ")
 
@@ -17,7 +13,7 @@ data = {
     'term': input_save  # Puedes cambiar este rut por cualquier otro que desees buscar
 }
 
-# Realizar la solicitud POST a través de Tor
+# Realizar la solicitud POST
 response = requests.post(url, data=data)
 
 # Verificar si la solicitud fue exitosa (código de estado 200)
