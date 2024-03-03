@@ -7,6 +7,7 @@ import sys
 from termcolor import colored
 #Progama 2.0
 #  Funciones
+
 #limpiar pantalla
 def limpiar_pantalla():
      sistema_operativo = os.name
@@ -23,16 +24,19 @@ def def_handler(sig, frame):
 # Asociar el manejador de señal a la señal SIGINT (Ctrl + C)
 signal.signal(signal.SIGINT, def_handler)
 
-def continuar():
+# Repetir
+def continuar(funcion_a_escoger):
       while True:
         respuesta = input("¿Quieres generar otro número aleatorio? (s/n): ")
         if respuesta.lower() == 's':
-                 print("Tu número generado al azar es", numero_aleatorio())
+                 limpiar_pantalla()
+                 osint_cl()
+                 print("Tu número generado al azar es", funcion_a_escoger())
         elif respuesta.lower() == 'n':
           print("¡Hasta luego!")
           break
         else:
-            print("Respuesta inválida. Por favor, responde 's' para continuar o 'n' para salir.")
+            print("Respuesta inválida. Por favor, responde 's' para continnouar o 'n' para salir.")
 
 # Menu Principal
 
@@ -196,7 +200,8 @@ def main():
             time.sleep(0.8)
             osint_cl()
             print("Tu número generado al azar es", numero_aleatorio())
-            time.sleep(7)
+            #time.sleep(7)
+            continuar(numero_aleatorio)
             limpiar_pantalla()
 
         # Opción 2: Elegir un RUT con parámetros
