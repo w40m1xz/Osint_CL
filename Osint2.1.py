@@ -153,6 +153,18 @@ def dibujo_calavera():
 ███████████████████████████
                          ''')
 
+
+def by_ruisu():
+ print(r''' ____                     _           
+ |  _ \                   (_)          
+ | |_) |_   _   _ __ _   _ _ ___ _   _ 
+ |  _ <| | | | | '__| | | | / __| | | |
+ | |_) | |_| | | |  | |_| | \__ \ |_| |
+ |____/ \__, | |_|   \__,_|_|___/\__,_|
+         __/ |                         
+        |___/                          
+                                     ''')
+
 def osint_cl():
     print("""
 
@@ -169,6 +181,11 @@ def osint_cl():
     
 def main():
     while True:
+        dibujo_calavera()
+        by_ruisu()
+        time.sleep(1)
+        limpiar_pantalla()
+        osint_cl()
         mostrar_menu()
         opcion = input("Selecciona una opción: ")
 
@@ -177,6 +194,7 @@ def main():
             print("Has seleccionado la Opción 1.")
             limpiar_pantalla()
             time.sleep(0.8)
+            osint_cl()
             print("Tu número generado al azar es", numero_aleatorio())
             time.sleep(7)
             limpiar_pantalla()
