@@ -4,14 +4,9 @@ import time
 import os
 import signal
 import sys
-
 from termcolor import colored
 #Progama 2.0
-
-
 #  Funciones
-
-
 #limpiar pantalla
 def limpiar_pantalla():
      sistema_operativo = os.name
@@ -28,6 +23,16 @@ def def_handler(sig, frame):
 # Asociar el manejador de señal a la señal SIGINT (Ctrl + C)
 signal.signal(signal.SIGINT, def_handler)
 
+def continuar():
+      while True:
+        respuesta = input("¿Quieres generar otro número aleatorio? (s/n): ")
+        if respuesta.lower() == 's':
+                 print("Tu número generado al azar es", numero_aleatorio())
+        elif respuesta.lower() == 'n':
+          print("¡Hasta luego!")
+          break
+        else:
+            print("Respuesta inválida. Por favor, responde 's' para continuar o 'n' para salir.")
 
 # Menu Principal
 
@@ -124,10 +129,9 @@ def ultimo_numero_opcional():
     
 numero_uno_opcional2=numero_opcional_uno
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# ACA EMPIEZA EL PROGAMA
-
-print('''
+#dibujos
+def dibujo_calavera():
+ print('''
 ███████████████████████████
 ███████▀▀▀░░░░░░░▀▀▀███████
 ████▀░░░░░░░░░░░░░░░░░▀████
@@ -147,23 +151,10 @@ print('''
 ███████▄░░░░░░░░░░░▄███████
 ██████████▄▄▄▄▄▄▄██████████
 ███████████████████████████
-                     ''')
-print(''' ____                     _           
- |  _ \                   (_)          
- | |_) |_   _   _ __ _   _ _ ___ _   _ 
- |  _ <| | | | | '__| | | | / __| | | |
- | |_) | |_| | | |  | |_| | \__ \ |_| |
- |____/ \__, | |_|   \__,_|_|___/\__,_|
-         __/ |                         
-        |___/                          
-                                     ''')
-time.sleep(3)
-limpiar_pantalla()
+                         ''')
 
-print ("Bievenido al progama")
-
-
-print("""
+def osint_cl():
+    print("""
 
  ██████  ███████ ██ ███    ██ ████████       ██████ ██      
 ██    ██ ██      ██ ████   ██    ██         ██      ██      
@@ -173,6 +164,9 @@ print("""
                                                             
                                        """)                     
 
+#--------------------------------------------------------------------------------------------------------------
+# ACA EMPIEZA EL PROGAMA
+    
 def main():
     while True:
         mostrar_menu()
@@ -186,6 +180,7 @@ def main():
             print("Tu número generado al azar es", numero_aleatorio())
             time.sleep(7)
             limpiar_pantalla()
+
         # Opción 2: Elegir un RUT con parámetros
         elif opcion == "2":
             pass  # Implementa la lógica para esta opción aquí
