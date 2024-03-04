@@ -4,7 +4,7 @@ import os
 
 def enviar_solicitud_get():
     url = 'https://www.nombrerutyfirma.com/rut'
-    params = {'term': '19.084.309-2'}
+    params = {'term': '17.352.883-3'}
     headers = {
         'Host': 'www.nombrerutyfirma.com',
         'Cookie': 'cf_clearance=DuWwsI1Jk_E5A0UBh_tPzpwyCANkrz.mbNv9NzE286E-1709514440-1.0.1.1-Gofv6W1hJ17Hop9dIpvsVSBJFRvJorbhCHQ64v3jiS7q_2CeQbJYKWnu0uJKdT_qfKFdcQi7M6.yBpgafdI1Ow',
