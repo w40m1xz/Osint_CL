@@ -55,3 +55,7 @@ if response.status_code == 200:
         print("No se encontró la tabla de resultados.")
 else:
     print("Error al realizar la solicitud:", response.status_code)
+
+
+
+    # https://www.nombrerutyfirma.com/rut?term=19.084.309-2

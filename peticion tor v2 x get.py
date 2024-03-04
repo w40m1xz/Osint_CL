@@ -2,7 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-def enviar_solicitud_get():
+# Instalar requests[socks] si no está instalado
+# pip install requests[socks]
+
+def enviar_solicitud_get_tor():
+    # Configuramos las opciones de proxy para usar Tor
+    proxies = {
+        'http': 'socks5h://localhost:9050',
+        'https': 'socks5h://localhost:9050'
+    }
+
     url = 'https://www.nombrerutyfirma.com/rut'
     params = {'term': '19.084.309-2'}
     headers = {
@@ -25,7 +34,7 @@ def enviar_solicitud_get():
         'Te': 'trailers'
     }
   
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(url, headers=headers, params=params, proxies=proxies)
 
     if response.status_code == 200:
         print("Solicitud exitosa!")
@@ -47,7 +56,7 @@ def enviar_solicitud_get():
 
 def analizar_y_borrar_html():
     # Llamando a la función para enviar la solicitud GET y obtener la respuesta
-    response = enviar_solicitud_get()
+    response = enviar_solicitud_get_tor()
 
     if response:
         # Analizar la respuesta HTML
@@ -62,7 +71,6 @@ def analizar_y_borrar_html():
             rut = container_div.find('td', style='white-space: nowrap;').text
             direccion = container_div.find_all('td')[3].text
             ciudad_comuna = container_div.find_all('td')[4].text
-            #limpiar_pantalla()
             # Mostrar los datos de manera elegante
             print(f"Nombre: {nombre}")
             print(f"RUT: {rut}")
