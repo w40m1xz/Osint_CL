@@ -58,4 +58,4 @@ else:
 
 
 
-    # https://www.nombrerutyfirma.com/rut?term=19.084.309-2
+    # https://www.nombrerutyfirma.com/rut?term=xx.xxx.xxx-x
