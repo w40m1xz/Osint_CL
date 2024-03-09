@@ -5,7 +5,10 @@ import os
 import signal
 import sys
 from termcolor import colored
+
 #Progama 2.0
+
+
 #  Funciones
 
 #limpiar pantalla
@@ -27,16 +30,18 @@ signal.signal(signal.SIGINT, def_handler)
 # Repetir
 def continuar(funcion_a_escoger):
       while True:
-        respuesta = input("¿Quieres generar otro número aleatorio? (s/n): ")
-        if respuesta.lower() == 's':
-                 limpiar_pantalla()
-                 osint_cl()
+        respuesta = input("¿Quieres generar otro rut? (si/no): ")
+        if respuesta.lower() == 'si':
+                 limpiar_pantalla() 
+                 osint_cl
                  print("Tu número generado al azar es", funcion_a_escoger())
-        elif respuesta.lower() == 'n':
+        elif respuesta.lower() == 'no':
           print("¡Hasta luego!")
           break
         else:
-            print("Respuesta inválida. Por favor, responde 's' para continnouar o 'n' para salir.")
+            print("Respuesta inválida. Por favor, responde 'si' para continnouar o 'no' para salir.")
+            time.sleep(0.8)
+            limpiar_pantalla()
 
 # Menu Principal
 
@@ -54,7 +59,7 @@ def mostrar_menu():
 
 def primer_numero_azar():
  return random.randint(1, 25)
-one_number=primer_numero_azar()
+
 
 # Generar 3 numeros al azar
 def generar_tres_numero_azar():
@@ -63,8 +68,6 @@ def generar_tres_numero_azar():
  c = random.randint(0, 9)
  numero_azar = str(a) + str(b) + str(c) 
  return numero_azar
-three_number_one= generar_tres_numero_azar
-three_number_two = generar_tres_numero_azar
 
 # el ultimo numero del rut al azar
 def ultimo_number():
@@ -74,9 +77,8 @@ def ultimo_number():
         return 'K'
     else:
         return aleatorio
-  
-last_number = ultimo_number()
 
+# generar tu rut al azar
 def numero_aleatorio():
     # Definiendo los valores llamándolos desde fuera
     one_number = primer_numero_azar()
@@ -94,17 +96,13 @@ def numero_aleatorio():
 
     return Rut_azar_formateado
 
-azar = numero_aleatorio()
-
-
-azar= numero_aleatorio()
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
 # elegir tu numero de primer digito 
 def numero_opcional_uno():
     while True:
         try:
-            numero = int(input("Por favor, ingresa un número: 1 al 25: "))
+            numero = int(input("Por favor, ingresa un número: 1 al 25 para tu primer numero de tu rut: "))
             if 1 <= numero <= 25:
                 break
             else:
@@ -112,26 +110,96 @@ def numero_opcional_uno():
         except ValueError:
             print("Por favor, ingresa un número válido.")
     return numero
-
-numero_uno_opcional=numero_opcional_uno
-
-#elegir el ultimo numero o k de tu rut
+# el ultimo numero opcional
 def ultimo_numero_opcional():
     while True:
         try:
-            entrada_final = input("Por favor, ingresa un número del 1 al 9 o 'K': ")
+            osint_cl()
+            entrada_final = input("Por favor, ingresa un número del 0 al 9 o 'K': ")
             if entrada_final.upper() == 'K':
                 return 'K'
             else:
-                numero = int(entrada_final)
-                if 1 <= numero <= 9:
-                    return numero
+                entrada_final = int(entrada_final)
+                if 0 <= entrada_final <= 9:
+                    return entrada_final
                 else:
-                    print("El número debe estar entre 1 y 9. Inténtalo de nuevo.")
+                    print("El número debe estar entre 0 y 9. Inténtalo de nuevo.")
+                    time.sleep(0.8)
+                    limpiar_pantalla()
+                    
         except ValueError:
             print("Por favor, ingresa un número válido o 'K'.")
     
-numero_uno_opcional2=numero_opcional_uno
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# tu rut con parametros
+
+def crear_numero_con_parametros():
+    # Llamando a las funciones
+    opc_answer_one = ""
+    opc_answer_two = ""
+    respuesta_primer_numero = ""    
+    respuesta_ultimo_numero = ""
+
+    while True:
+        try: 
+            osint_cl
+            opc_answer_one = input("¿Desea elegir el primer número de tu rut? (si/no): ").lower()
+            time.sleep(0.8)
+            limpiar_pantalla()
+            osint_cl()
+            if opc_answer_one == "si":
+                print("Has elegido 'si'.")
+                limpiar_pantalla()
+                osint_cl()
+                respuesta_primer_numero = numero_opcional_uno()
+                time.sleep(1.3)
+                limpiar_pantalla()
+            elif opc_answer_one == "no":
+                print("Has elegido 'no'.")
+                limpiar_pantalla()
+                respuesta_primer_numero = primer_numero_azar()
+            else:
+                osint_cl
+                print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
+                limpiar_pantalla()
+                continue
+            osint_cl()
+            opc_answer_two = input("¿Desea elegir el último número de tu rut (si/no): ").lower()
+            time.sleep(0.8)
+            limpiar_pantalla()
+            if opc_answer_two == "si":
+                print("Has elegido 'si'.")
+                limpiar_pantalla()
+                respuesta_ultimo_numero = ultimo_numero_opcional()
+                time.sleep(1.3)
+                limpiar_pantalla()
+            elif opc_answer_two == "no":
+                print("Has elegido 'no'.")
+                respuesta_ultimo_numero = ultimo_number()
+                limpiar_pantalla()
+            else:
+                limpiar_pantalla()
+                osint_cl()
+                print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
+                continue
+
+            break  # Salir del bucle while cuando se han ingresado las respuestas correctas
+        
+        except ValueError:
+            print("Respuesta inválida. Por favor, ingresa un número válido.")
+
+    azar_two = generar_tres_numero_azar()
+    azar_three = generar_tres_numero_azar()
+
+    if respuesta_ultimo_numero == 'K':
+        respuesta_ultimo_numero = 'K'
+    else:
+        respuesta_ultimo_numero = str(respuesta_ultimo_numero)
+
+    rut_con_parametro_final = "{:02d}{:03d}{:03d}-{}".format(int(respuesta_primer_numero), int(azar_two), int(azar_three), respuesta_ultimo_numero)
+    rut_con_parametro_final_formateado = "{}.{}.{}-{}".format(rut_con_parametro_final[:2], rut_con_parametro_final[2:5], rut_con_parametro_final[5:8], rut_con_parametro_final[9:12])
+    return rut_con_parametro_final_formateado
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #dibujos
 def dibujo_calavera():
@@ -198,14 +266,21 @@ def main():
             print("Has seleccionado la Opción 1.")
             limpiar_pantalla()
             time.sleep(0.8)
-            osint_cl()
             print("Tu número generado al azar es", numero_aleatorio())
-            #time.sleep(7)
             continuar(numero_aleatorio)
             limpiar_pantalla()
 
         # Opción 2: Elegir un RUT con parámetros
         elif opcion == "2":
+            print("Has seleccionado la Opción 2.")
+            limpiar_pantalla()
+            time.sleep(0.8)
+            osint_cl()  # Llamar a osint_cl() después de limpiar la pantalla
+            print("Tu número generado con parametros es", crear_numero_con_parametros())
+            continuar(crear_numero_con_parametros)
+            osint_cl
+            limpiar_pantalla()  # Llamar a limpiar_pantalla() con paréntesis
+
             pass  # Implementa la lógica para esta opción aquí
 
         # Opción 3: Elegir un número telefónico al azar
