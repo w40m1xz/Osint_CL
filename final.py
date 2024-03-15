@@ -201,12 +201,6 @@ class Osint:
 
           return Rut_azar_formateado
         def crear_numero_con_parametros():
-        # Llamando a las funciones
-            opc_answer_one = ""
-            opc_answer_two = ""
-            respuesta_primer_numero = ""    
-            respuesta_ultimo_numero = ""
-
             while True:
               try: 
                  # elegir tu primer digito del rut
@@ -234,19 +228,18 @@ class Osint:
                      print("Has elegido 'no'.")
                      respuesta_ultimo_numero = ultimo_number()
                  else:
-                   print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
-                   continue
+                     print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
+                     continue
                  break  # Salir del bucle while cuando se han ingresado las respuestas correctas
               except ValueError:
                print("Respuesta inválida. Por favor, ingresa un número válido.")
 
             azar_two = generar_tres_numero_azar()
             azar_three = generar_tres_numero_azar()
-
             if respuesta_ultimo_numero == 'K':
-               respuesta_ultimo_numero = 'K'
+                  respuesta_ultimo_numero = 'K'
             else:
-               respuesta_ultimo_numero = str(respuesta_ultimo_numero)
+                 respuesta_ultimo_numero = str(respuesta_ultimo_numero)
             rut_con_parametro_final = "{:02d}{:03d}{:03d}-{}".format(int(respuesta_primer_numero), int(azar_two), int(azar_three), respuesta_ultimo_numero)
             rut_con_parametro_final_formateado = "{}.{}.{}-{}".format(rut_con_parametro_final[:2], rut_con_parametro_final[2:5], rut_con_parametro_final[5:8], rut_con_parametro_final[9:12])
             return rut_con_parametro_final_formateado
