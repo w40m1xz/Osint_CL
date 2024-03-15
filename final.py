@@ -95,7 +95,7 @@ class Osint:
                 print("El RUT ingresado no se encontró en la base de datos.")
                 os.remove('respuesta.html')
             else:
-                print("Error al realizar la solicitud:", response.status_code)
+               print("Error al realizar la solicitud:", response.status_code)
         def limpiar_pantalla():
             sistema_operativo = os.name
             if sistema_operativo == 'nt':  # Windows
@@ -192,9 +192,7 @@ class Osint:
              Rut_azar_genetor = "{:02d}{:03d}{:03d}-K".format(int(one_number), int(three_number_one), int(three_number_two))
           else:  # Si el último número es 0 o 1
             Rut_azar_genetor = "{:02d}{:03d}{:03d}-{:01d}".format(int(one_number), int(three_number_one), int(three_number_two), last_number)
-
             Rut_azar_formateado = Rut_azar_genetor[:2] + '.' + Rut_azar_genetor[2:5] + '.' + Rut_azar_genetor[5:8] + '-' + Rut_azar_genetor[9:]
-
           return Rut_azar_formateado
         def crear_numero_con_parametros():
             while True:
