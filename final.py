@@ -134,9 +134,7 @@ class Osint:
             print("2.Genera tu rut al azar")
             print("3.Generar tu rut con parametros")
             print("4.Generar lotes de rut")
-            print("5.Salir")
-
-            
+            print("5.Salir")         
     class Numeros:
        def primer_numerorut_azar():
          return random.randint(1, 25)
@@ -180,9 +178,7 @@ class Osint:
                     
                     
                 except ValueError:
-                  print("Por favor, ingresa un número válido o 'K'.")
-                       
-         
+                  print("Por favor, ingresa un número válido o 'K'.")      
     class Crear:     # REVISAR LA LLAMADA DE LA FUNCIONES
         def crear_rut_aleatorio():
         # Definiendo los valores llamándolos desde fuera
@@ -242,8 +238,7 @@ class Osint:
                  respuesta_ultimo_numero = str(respuesta_ultimo_numero)
             rut_con_parametro_final = "{:02d}{:03d}{:03d}-{}".format(int(respuesta_primer_numero), int(azar_two), int(azar_three), respuesta_ultimo_numero)
             rut_con_parametro_final_formateado = "{}.{}.{}-{}".format(rut_con_parametro_final[:2], rut_con_parametro_final[2:5], rut_con_parametro_final[5:8], rut_con_parametro_final[9:12])
-            return rut_con_parametro_final_formateado
-  
+            return rut_con_parametro_final_formateado 
     class Dibujos:
         def dibujo_calavera():
          print('''
