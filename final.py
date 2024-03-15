@@ -180,7 +180,7 @@ class Osint:
                     
                     
                 except ValueError:
-                       print("Por favor, ingresa un número válido o 'K'.")
+                  print("Por favor, ingresa un número válido o 'K'.")
                        
          
     class Crear:     # REVISAR LA LLAMADA DE LA FUNCIONES
