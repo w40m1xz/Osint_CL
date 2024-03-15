@@ -130,11 +130,11 @@ class Osint:
                 time.sleep(0.8)
         def mostrar_menu():
             print("Menú:")
-            print("1.Buscar un rut")
-            print("2.Genera tu rut al azar")
-            print("3.Generar tu rut con parametros")
-            print("4.Generar lotes de rut")
-            print("5.Salir")         
+            print("1. Buscar un rut")
+            print("2. Genera tu rut al azar")
+            print("3. Generar tu rut con parametros")
+            print("4. Generar lotes de rut")
+            print("5. Salir")
     class Numeros:
        def primer_numerorut_azar():
          return random.randint(1, 25)
