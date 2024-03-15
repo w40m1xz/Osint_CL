@@ -385,7 +385,7 @@ def main():
             time.sleep(0.8)
             osint_cl()  # Llamar a osint_cl() después de limpiar la pantalla
             print("Tu número generado con parametros es", crear_numero_con_parametros())
-            continuar_two(crear_numero_con_parametros,tu_rut)
+            continuar(crear_numero_con_parametros)
             osint_cl
             limpiar_pantalla()  # Llamar a limpiar_pantalla() con paréntesis
 
