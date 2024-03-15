@@ -91,11 +91,9 @@ class Osint:
                     print(f"Ciudad/Comuna: {ciudad}")
                 
                     os.remove('respuesta.html')
-              else:
-                print("El RUT ingresado no se encontró en la base de datos.")
-                os.remove('respuesta.html')
             else:
-               print("Error al realizar la solicitud:", response.status_code)
+                print("El RUT ingresado no se encontró en la base de datos.")
+                os.remove('respuesta.html')          
         def limpiar_pantalla():
             sistema_operativo = os.name
             if sistema_operativo == 'nt':  # Windows
@@ -286,8 +284,6 @@ class Osint:
     
 def main():
  print("")
-
-
 
 
 
