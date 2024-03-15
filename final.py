@@ -141,11 +141,11 @@ class Osint:
        def primer_numerorut_azar():
          return random.randint(1, 25)
        def generar_tres_numero_azar():
-        a = random.randint(0, 9)
-        b = random.randint(0, 9)
-        c = random.randint(0, 9)
-        numero_azar = str(a) + str(b) + str(c) 
-        return numero_azar
+           a = random.randint(0, 9)
+           b = random.randint(0, 9)
+           c = random.randint(0, 9)
+           numero_azar = str(a) + str(b) + str(c) 
+           return numero_azar
        def ultimo_numerorut_azar():
         aleatorio = random.randint(0, 10)
         # Si el número es 10, seleccionar 'K', de lo contrario, seleccionar un número aleatorio entre 0 y 9
