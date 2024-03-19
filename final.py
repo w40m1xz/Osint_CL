@@ -9,15 +9,16 @@ import re
 import requests
 from bs4 import BeautifulSoup
 import os
-#Progama 2.0
 
 
+
+#Progama 2.1
 
 class Osint:
-    class Funciones:
-        def peticion_De_rut(tu_rut):
-            url = 'https://www.nombrerutyfirma.com/rut'
-            headers = {
+    class Funciones: 
+      def buscador_de_rut(self, rut):
+        url = 'https://www.nombrerutyfirma.com/rut'
+        headers = {
             'Host': 'www.nombrerutyfirma.com',
             'Cookie': 'cf_clearance=DuWwsI1Jk_E5A0UBh_tPzpwyCANkrz.mbNv9NzE286E-1709514440-1.0.1.1-Gofv6W1hJ17Hop9dIpvsVSBJFRvJorbhCHQ64v3jiS7q_2CeQbJYKWnu0uJKdT_qfKFdcQi7M6.yBpgafdI1Ow',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0',
@@ -35,98 +36,100 @@ class Osint:
             'Sec-Fetch-Site': 'same-origin',
             'Sec-Fetch-User': '?1',
             'Te': 'trailers'
-           }
-           # Función para validar el formato del RUT
-            def validar_rut(rut):
-              patron_rut = r'^\d{1,2}\.\d{3}\.\d{3}-[\dkK0-9]$'
+        }
+        # Enviar la solicitud GET con el RUT válido
+        params = {'term': rut}
+        response = requests.get(url, headers=headers, params=params)
 
-              return re.match(patron_rut, rut) is not None
-
-            if not validar_rut(tu_rut):
-                print("El RUT ingresado no tiene el formato correcto. Debe ser en formato x.xxx.xxx-x.")
-                return
-    
-            # Enviar la solicitud GET con el RUT válido
-            params = {'term': tu_rut}
-            response = requests.get(url, headers=headers, params=params)
-
-            if response.status_code == 200:
+        if response.status_code == 200:
             # Guardar la respuesta en un archivo
-              with open('respuesta.html', 'w', encoding='utf-8') as file:
-                 file.write(response.text)
+            with open('respuesta.html', 'w', encoding='utf-8') as file:
+                file.write(response.text)
+            
             # Analizar la respuesta HTML
-              soup = BeautifulSoup(response.text, 'html.parser')
-        
+            soup = BeautifulSoup(response.text, 'html.parser')
+            
             # Encontrar el div con la clase "container"
-              container_div = soup.find('div', class_='container')
+            container_div = soup.find('div', class_='container')
 
             # Extraer los datos necesarios dentro del div
-              if container_div:
-                 rut_element = container_div.find('td', style='white-space: nowrap;')
-                 if rut_element:
+            if container_div:
+                rut_element = container_div.find('td', style='white-space: nowrap;')
+                if rut_element:
                     rut = rut_element.text.strip() 
                     nombre = container_div.find_all('td')[0].text.strip()
                     sexo = container_div.find_all('td')[2].text.strip()  
                     Dirección = container_div.find_all('td')[3].text.strip()
                     ciudad = container_div.find_all('td')[4].text.strip()
-                
+                    
                     # Ordenar el nombre 
                     nombres_separados = nombre.split()
                     nombres_reordenados = " ".join(nombres_separados[2:] + nombres_separados[:2])
-                
-                   # Ordenando el tipo de sexo
+                    
+                    # Ordenando el tipo de sexo
                     sexo_element = sexo
                     if sexo_element == "VAR":
-                       sexo_element = "Hombre"
+                        sexo_element = "Hombre"
                     elif sexo_element == "MUJ":
-                       sexo_element = "Mujer"
+                        sexo_element = "Mujer"
                     else:
-                       sexo_element = 'No encontrado'
+                        sexo_element = 'No encontrado'
 
-                      # Mostrar los datos 
+                    # Mostrar los datos 
                     print(f"Nombre: {nombres_reordenados}")
                     print(f"RUT: {rut}")
                     print(f"Sexo: {sexo_element}")
                     print(f"Dirección: {Dirección}")
                     print(f"Ciudad/Comuna: {ciudad}")
-                
+                    
+                    os.remove('respuesta.html')
+                else:
+                    print("El RUT ingresado no se encontró en la base de datos.")
                     os.remove('respuesta.html')
             else:
-                print("El RUT ingresado no se encontró en la base de datos.")
-                os.remove('respuesta.html')          
-        def limpiar_pantalla():
+                print("Error al realizar la solicitud:", response.status_code)
+      def validar_rut(self, rut):   
+          #Expresion regular que valida el formato rut x.xxx.xxx-k
+          patron_rut = r'^(25|[1-9]|[1][0-9]|2[0-5])\.\d{3}\.\d{3}-[\dkK0-9]$'
+              # Comprobar si el RUT coincide con el patrón
+          if re.match(patron_rut, rut):
+             return True
+            
+          else:
+             return False    
+      def limpiar_pantalla(self):
             sistema_operativo = os.name
             if sistema_operativo == 'nt':  # Windows
                os.system('cls')
             else:  # Unix/Linux/MacOS
              os.system('clear')
-        def control_De_salida(sig, frame):
+      def control_De_salida(self, sig, frame):
           print(colored(f"\n\n[!]Saliendo...\n",'red'))
           sys.exit(0)
-        def continuar(funcion_a_escoger):
+      def continuar(self,funcion_a_escoger):
             while True:
              respuesta = input("¿Quieres generar otro rut? (si/no): ")
              if respuesta.lower() == 'si':
                  print("Tu número generado al azar es", funcion_a_escoger())
+                 True
              elif respuesta.lower() == 'no':
-                print("¡Hasta luego!")
-                break
-             else:
-               print("Respuesta inválida. Por favor, responde 'si' para continnouar o 'no' para salir.")
-               time.sleep(0.8)
-        def continuar_buscador(tu_rut):
-           while True:
-              respuesta = input("¿Quieres buscar otro rut? (si/no): ")
-              if respuesta.lower() == 'si':
-               tu_rut = input("Ingresa un rut que deseas buscar: ")
-              # Ver  mas tarde : Peticion_De_rut(tu_rut)  # Llamar a la función con el RUT proporcionado
-              elif respuesta.lower() == 'no':
                   print("¡Hasta luego!")
                   break
-              else:
-                print("Respuesta inválida. Por favor, responde 'si' para continuar o 'no' para salir.")
-                time.sleep(0.8)
-        def mostrar_menu():
+             else:
+                 print("Respuesta inválida. Por favor, responde 'si' para continuar o 'no' para salir.")
+      def continuar_buscando_rut(self,rut):
+        while True:
+            respuesta = input("¿Quieres buscar otro RUT? (si/no): ")
+            if respuesta.lower() != 'si':
+                print("¡Hasta luego!")
+                break
+            rut = input("Ingresa un RUT que deseas buscar: ")
+            if not self.validar_rut(rut):
+                print("El RUT ingresado no tiene el formato correcto. Debe ser en formato x.xxx.xxx-x.")
+                rut = input("Ingresa un RUT que deseas buscar: ")
+                False
+            self.buscador_de_rut(rut)
+      def mostrar_menu(self):
             print("Menú:")
             print("1. Buscar un rut")
             print("2. Genera tu rut al azar")
@@ -134,22 +137,22 @@ class Osint:
             print("4. Generar lotes de rut")
             print("5. Salir")
     class Numeros:
-       def primer_numerorut_azar():
+       def primer_numerorut_azar(self):
          return random.randint(1, 25)
-       def generar_tres_numero_azar():
+       def generar_tres_numero_azar(self):
            a = random.randint(0, 9)
            b = random.randint(0, 9)
            c = random.randint(0, 9)
            numero_azar = str(a) + str(b) + str(c) 
            return numero_azar
-       def ultimo_numerorut_azar():
+       def ultimo_numerorut_azar(self):
         aleatorio = random.randint(0, 10)
         # Si el número es 10, seleccionar 'K', de lo contrario, seleccionar un número aleatorio entre 0 y 9
         if aleatorio == 10:
          return 'K'
         else:
          return aleatorio
-       def primer_numerorut_opcional():
+       def primer_numerorut_opcional(self):
         while True:
             try:
               numero = int(input("Por favor, ingresa un número: 1 al 25 para tu primer numero de tu rut: "))
@@ -160,7 +163,7 @@ class Osint:
             except ValueError:
                print("Por favor, ingresa un número válido.")
         return numero
-       def ultimo_numerorut_opcional():
+       def ultimo_numerorut_opcional(self):
             while True:
                 try:
                    entrada_final = input("Por favor, ingresa un número del 0 al 9 o 'K': ")
@@ -177,21 +180,25 @@ class Osint:
                     
                 except ValueError:
                   print("Por favor, ingresa un número válido o 'K'.")      
-    class Crear:     # REVISAR LA LLAMADA DE LA FUNCIONES
-        def crear_rut_aleatorio():
+    class Crear: 
+        def __init__(self):
+         self.numeros_Intancia = Osint.Numeros()       
+        def crear_rut_aleatorio(self):
         # Definiendo los valores llamándolos desde fuera
-          one_number = primer_numero_azar()
-          three_number_one = generar_tres_numero_azar()
-          three_number_two = generar_tres_numero_azar()
-          last_number = ultimo_number()
+         one_number = self.numeros_Intancia.primer_numerorut_azar()
+         three_number_one = self.numeros_Intancia.generar_tres_numero_azar()
+         three_number_two = self.numeros_Intancia.generar_tres_numero_azar()
+         last_number = self.numeros_Intancia.ultimo_numerorut_azar()
 
-       # Formateando el RUT con punto y guión
-          if last_number == 'K':  # Si el último número es 'K'
+         # Formateando el RUT con punto y guión
+         if last_number == 'K':  # Si el último número es 'K'
              Rut_azar_genetor = "{:02d}{:03d}{:03d}-K".format(int(one_number), int(three_number_one), int(three_number_two))
-          else:  # Si el último número es 0 o 1
-            Rut_azar_genetor = "{:02d}{:03d}{:03d}-{:01d}".format(int(one_number), int(three_number_one), int(three_number_two), last_number)
-            Rut_azar_formateado = Rut_azar_genetor[:2] + '.' + Rut_azar_genetor[2:5] + '.' + Rut_azar_genetor[5:8] + '-' + Rut_azar_genetor[9:]
-          return Rut_azar_formateado
+         else:  # Si el último número es 0 o 1
+             Rut_azar_genetor = "{:02d}{:03d}{:03d}-{:01d}".format(int(one_number), int(three_number_one), int(three_number_two), last_number)
+        
+         Rut_azar_formateado = Rut_azar_genetor[:2] + '.' + Rut_azar_genetor[2:5] + '.' + Rut_azar_genetor[5:8] + '-' + Rut_azar_genetor[9:]
+        
+         return Rut_azar_formateado
         def crear_numero_con_parametros():
             while True:
               try: 
@@ -283,10 +290,37 @@ class Osint:
 # Inicio del progama
     
 def main():
- print("")
+ # Creando una instancia de las clases
+ mifunciones= Osint.Funciones()
+ crear = Osint.Crear()
+ # Inicio
+ mifunciones.mostrar_menu()
+ opcion = input("Selecciona una opción: ")
+ while True:
 
-
+  # Opción 1: Buscar un rut
+        if opcion == "1":
+            while True:
+               rut = input("Ingresa un RUT en el formato xx.xxx.xxx-k(Solo numeros y ultimo digito 0-9 o K): ")
+               if mifunciones.validar_rut(rut):
+                  print("El RUT ingresado es válido.")
+                  mifunciones.buscador_de_rut(rut)
+                  mifunciones.continuar_buscando_rut(rut)
+                  return rut
+               else:
+                  print("El RUT ingresado no es válido. Asegúrate de que cumpla con el formato especificado.")
+               continue  # Llama nuevamente al inicio del bucle para solicitar otro RUT
+   # Opción 2: Generar un rut aleatorio
+        elif opcion == "2":
+            print("Has seleccionado la Opción 2.")
+            mifunciones.limpiar_pantalla()
+            time.sleep(0.8)
+            print("Tu número generado al azar es", crear.crear_rut_aleatorio())
+            mifunciones.continuar(crear.crear_rut_aleatorio)
+            break
+            
+       # Funciona 1 y 2 pero no vuelven al menu
 
 if __name__ == "__main__":
     main()
- 
+
