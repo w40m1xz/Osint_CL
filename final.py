@@ -199,51 +199,49 @@ class Osint:
          Rut_azar_formateado = Rut_azar_genetor[:2] + '.' + Rut_azar_genetor[2:5] + '.' + Rut_azar_genetor[5:8] + '-' + Rut_azar_genetor[9:]
         
          return Rut_azar_formateado
-        def crear_numero_con_parametros():
-            while True:
-              try: 
-                 # elegir tu primer digito del rut
-                 opc_answer_one = input("¿Desea elegir el primer número de tu rut? (si/no): ").lower()
-                 time.sleep(0.8)
-                 if opc_answer_one == "si":
+        def crear_numero_con_parametros(self):  
+         while True:
+            try: 
+                # elegir tu primer dígito del rut
+                opc_answer_one = input("¿Desea elegir el primer número de tu rut? (si/no): ").lower()
+                time.sleep(0.8)
+                if opc_answer_one == "si":
                     print("Has elegido 'si'.")
-                    respuesta_primer_numero = numero_opcional_uno()
+                    respuesta_primer_numero = self.numeros_Intancia.primer_numerorut_opcional()
                     time.sleep(1.3)
-               
-                 elif opc_answer_one == "no":
+                elif opc_answer_one == "no":
                     print("Has elegido 'no'.")
-                    respuesta_primer_numero = primer_numero_azar()
-                 else:
+                    respuesta_primer_numero = self.numeros_Intancia.primer_numerorut_azar()
+                else:
                     print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
                     continue
-                    # elegir tu ultimo digito del rut
-                 opc_answer_two = input("¿Desea elegir el último número de tu rut (si/no): ").lower()
-                 time.sleep(0.8)
-                 if opc_answer_two == "si":
-                  print("Has elegido 'si'.")
-                  respuesta_ultimo_numero = ultimo_numero_opcional()
-                  time.sleep(1.3)
-                 elif opc_answer_two == "no":
-                     print("Has elegido 'no'.")
-                     respuesta_ultimo_numero = ultimo_number()
-                 else:
-                     print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
-                     continue
-                 break  # Salir del bucle while cuando se han ingresado las respuestas correctas
-              except ValueError:
-               print("Respuesta inválida. Por favor, ingresa un número válido.")
+                 
+                # elegir tu último dígito del rut
+                opc_answer_two = input("¿Desea elegir el último número de tu rut (si/no): ").lower()
+                time.sleep(0.8)
+                if opc_answer_two == "si":
+                    print("Has elegido 'si'.")
+                    respuesta_ultimo_numero = self.numeros_Intancia.ultimo_numerorut_opcional()
+                    time.sleep(1.3)
+                elif opc_answer_two == "no":
+                    print("Has elegido 'no'.")
+                    respuesta_ultimo_numero = self.numeros_Intancia.ultimo_numerorut_azar()
+                else:
+                    print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
+                    continue
+                
+                azar_two = self.numeros_Intancia.generar_tres_numero_azar()
+                azar_three = self.numeros_Intancia.generar_tres_numero_azar()
 
-            azar_two = generar_tres_numero_azar()
-            azar_three = generar_tres_numero_azar()
-            if respuesta_ultimo_numero == 'K':
-                  respuesta_ultimo_numero = 'K'
-            else:
-                 respuesta_ultimo_numero = str(respuesta_ultimo_numero)
-            rut_con_parametro_final = "{:02d}{:03d}{:03d}-{}".format(int(respuesta_primer_numero), int(azar_two), int(azar_three), respuesta_ultimo_numero)
-            rut_con_parametro_final_formateado = "{}.{}.{}-{}".format(rut_con_parametro_final[:2], rut_con_parametro_final[2:5], rut_con_parametro_final[5:8], rut_con_parametro_final[9:12])
-            return rut_con_parametro_final_formateado 
+            
+                rut_con_parametro_final = "{:02d}{:03d}{:03d}-{}".format(int(respuesta_primer_numero), int(azar_two), int(azar_three), respuesta_ultimo_numero if isinstance(respuesta_ultimo_numero, int) else 'K')
+                rut_con_parametro_final_formateado = "{}.{}.{}-{}".format(rut_con_parametro_final[:2], rut_con_parametro_final[2:5], rut_con_parametro_final[5:8], rut_con_parametro_final[9:])
+                return rut_con_parametro_final_formateado
+
+            except ValueError:
+                print("Respuesta inválida. Por favor, ingresa un número válido.")
     class Dibujos:
-        def dibujo_calavera():
+        def dibujo_calavera(self):
          print('''
                 ███████████████████████████
                 ███████▀▀▀░░░░░░░▀▀▀███████
@@ -265,7 +263,7 @@ class Osint:
                 ██████████▄▄▄▄▄▄▄██████████
                 ███████████████████████████
                          ''')
-        def by_ruisu():
+        def by_ruisu(self):
          print(r'''           
           ____                     _           
          |  _ \                   (_)          
@@ -276,7 +274,7 @@ class Osint:
                  __/ |                         
                 |___/                          
                                      ''')
-        def osint_cl():
+        def osint_cl(self):
             print("""
             ██████  ███████ ██ ███    ██ ████████       ██████ ██      
            ██    ██ ██      ██ ████   ██    ██         ██      ██      
@@ -293,8 +291,18 @@ def main():
  # Creando una instancia de las clases
  mifunciones= Osint.Funciones()
  crear = Osint.Crear()
+ dibujo = Osint.Dibujos()
+ signal.signal(signal.SIGINT, mifunciones.control_De_salida)
  # Inicio
+ dibujo.dibujo_calavera()
+ time.sleep(0.4)
+ dibujo.by_ruisu()
+ time.sleep(2)
+ mifunciones.limpiar_pantalla()
+ dibujo.osint_cl()
  mifunciones.mostrar_menu()
+
+ # Seleciona una opcion
  opcion = input("Selecciona una opción: ")
  while True:
 
@@ -303,22 +311,39 @@ def main():
             while True:
                rut = input("Ingresa un RUT en el formato xx.xxx.xxx-k(Solo numeros y ultimo digito 0-9 o K): ")
                if mifunciones.validar_rut(rut):
-                  print("El RUT ingresado es válido.")
                   mifunciones.buscador_de_rut(rut)
                   mifunciones.continuar_buscando_rut(rut)
                   return rut
                else:
                   print("El RUT ingresado no es válido. Asegúrate de que cumpla con el formato especificado.")
-               continue  # Llama nuevamente al inicio del bucle para solicitar otro RUT
+                  continue  # Llama nuevamente al inicio del bucle para solicitar otro RUT
    # Opción 2: Generar un rut aleatorio
         elif opcion == "2":
-            print("Has seleccionado la Opción 2.")
             mifunciones.limpiar_pantalla()
             time.sleep(0.8)
             print("Tu número generado al azar es", crear.crear_rut_aleatorio())
             mifunciones.continuar(crear.crear_rut_aleatorio)
             break
-            
+  # Opción 3: Generar un rut con parametros
+        elif opcion == "3":
+             mifunciones.limpiar_pantalla()
+             print("Tu número generado al azar es", crear.crear_numero_con_parametros())
+             #mifunciones.continuar(crear.crear_numero_con_parametros)
+             pass
+
+ # Opción 4: 
+        elif opcion == "4":
+            pass  # Implementa la lógica para esta opción aquí
+
+        # Opción 5: Salir
+        elif opcion == "5":
+            print("¡Hasta luego!")
+            break  # Salir del bucle después de seleccionar la Opción 4
+
+        else:
+            print("Opción inválida. Por favor, selecciona una opción válida.")
+
+  
        # Funciona 1 y 2 pero no vuelven al menu
 
 if __name__ == "__main__":
