@@ -10,21 +10,32 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
+#Bylucho
 
-
-#Progama 2.1
-
+# Clase que proporciona funciones útiles para realizar operaciones de OSINT
 class Osint:    
     class Funciones: 
       def continuar_buscando_rut(self):
+        self.dibujo = Osint.Dibujos()
+        self.limpiar_pantalla()
+        self.dibujo.osint_cl()
         while True:
             respuesta = input("¿Quieres buscar otro RUT? (si/no): ")
             if respuesta == 'si':
+              self.limpiar_pantalla()
+              self.dibujo.osint_cl()
               rut_verificado= self.validar_rut()
               self.buscador_de_rut(rut_verificado)
-            if respuesta.lower() != 'si':
-                print("¡Hasta luego!")
-                break
+              input("Presiona Enter para continuar...")
+            elif respuesta.lower() == 'no':
+              print("¡Hasta luego!")
+              time.sleep(1)
+              self.limpiar_pantalla()
+              break
+            else:
+              print("Por favor, ingresa 'si' o 'no'.")
+              time.sleep(1)
+              self.limpiar_pantalla()      
       def buscador_de_rut(self,rut):
         url = 'https://www.nombrerutyfirma.com/rut'
         headers = {
@@ -98,13 +109,18 @@ class Osint:
             else:
                 print("Error al realizar la solicitud:", response.status_code)
       def validar_rut(self):
+        self.dibujo= Osint.Dibujos()
         while True:
+            self.dibujo.osint_cl
             rut = input("Ingresa un RUT en el formato xx.xxx.xxx-k (Solo números y último dígito 0-9 o K): ")
             patron_rut = r'^(25|[1-9]|[1][0-9]|2[0-5])\.\d{3}\.\d{3}-[\dkK0-9]$'
             if re.match(patron_rut, rut):
                 break
             else:
-                print("El RUT ingresado no tiene el formato correcto. Inténtalo nuevamente.")  
+                print("El RUT ingresado no tiene el formato correcto. Inténtalo nuevamente.")
+                time.sleep(1)
+                self.limpiar_pantalla()
+                self.dibujo.osint_cl()
         return rut
       def limpiar_pantalla(self):
             sistema_operativo = os.name
@@ -116,13 +132,21 @@ class Osint:
           print(colored(f"\n\n[!]Saliendo...\n",'red'))
           sys.exit(0)
       def continuar(self,funcion_a_escoger):
-            while True:
+           self.dibujo = Osint.Dibujos()
+           self.limpiar_pantalla()
+           self.dibujo.osint_cl()
+           while True:
              respuesta = input("¿Quieres generar otro rut? (si/no): ")
              if respuesta.lower() == 'si':
+                 self.limpiar_pantalla()
+                 self.dibujo.osint_cl()
                  print("Tu Rut generado  es", funcion_a_escoger())
+                 time.sleep(1)
                  True
              elif respuesta.lower() == 'no':
                   print("¡Hasta luego!")
+                  time.sleep(0.8)
+                  self.limpiar_pantalla()
                   break
              else:
                  print("Respuesta inválida. Por favor, responde 'si' para continuar o 'no' para salir.")
@@ -196,7 +220,16 @@ class Osint:
          Rut_azar_formateado = Rut_azar_genetor[:2] + '.' + Rut_azar_genetor[2:5] + '.' + Rut_azar_genetor[5:8] + '-' + Rut_azar_genetor[9:]
         
          return Rut_azar_formateado
-        def crear_numero_con_parametros(self):  
+        def crear_numero_con_parametros(self): 
+         # se Defines la variable
+         azar_two = self.numeros_Intancia.generar_tres_numero_azar()
+         azar_three = self.numeros_Intancia.generar_tres_numero_azar()
+         #Definiendo la la funciones de la otras clases
+         self.dibujo = Osint.Dibujos()
+         self.funcion = Osint.Funciones()
+         # limpiamos y dibujamos osint
+         self.funcion.limpiar_pantalla()
+         self.dibujo.osint_cl()
          while True:
             try: 
                 # elegir tu primer dígito del rut
@@ -204,33 +237,42 @@ class Osint:
                 time.sleep(0.8)
                 if opc_answer_one == "si":
                     print("Has elegido 'si'.")
+                    time.sleep(0.8)
+                    self.funcion.limpiar_pantalla()
+                    self.dibujo.osint_cl()
                     respuesta_primer_numero = self.numeros_Intancia.primer_numerorut_opcional()
                     time.sleep(1.3)
+                    self.funcion.limpiar_pantalla()
                 elif opc_answer_one == "no":
                     print("Has elegido 'no'.")
+                    time.sleep(0.8)
+                    self.funcion.limpiar_pantalla()
                     respuesta_primer_numero = self.numeros_Intancia.primer_numerorut_azar()
                 else:
                     print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
                     continue
                  
                 # elegir tu último dígito del rut
+                self.dibujo.osint_cl()
                 opc_answer_two = input("¿Desea elegir el último número de tu rut (si/no): ").lower()
                 time.sleep(0.8)
                 if opc_answer_two == "si":
                     print("Has elegido 'si'.")
+                    time.sleep(0.8)
+                    self.funcion.limpiar_pantalla()
+                    self.dibujo.osint_cl()
                     respuesta_ultimo_numero = self.numeros_Intancia.ultimo_numerorut_opcional()
                     time.sleep(1.3)
+                    self.funcion.limpiar_pantalla()
                 elif opc_answer_two == "no":
                     print("Has elegido 'no'.")
+                    time.sleep(0.8)
+                    self.funcion.limpiar_pantalla()
+                    self.dibujo.osint_cl
                     respuesta_ultimo_numero = self.numeros_Intancia.ultimo_numerorut_azar()
                 else:
                     print("Respuesta inválida. Por favor, ingresa 'si' o 'no'.")
                     continue
-                
-                azar_two = self.numeros_Intancia.generar_tres_numero_azar()
-                azar_three = self.numeros_Intancia.generar_tres_numero_azar()
-
-            
                 rut_con_parametro_final = "{:02d}{:03d}{:03d}-{}".format(int(respuesta_primer_numero), int(azar_two), int(azar_three), respuesta_ultimo_numero if isinstance(respuesta_ultimo_numero, int) else 'K')
                 rut_con_parametro_final_formateado = "{}.{}.{}-{}".format(rut_con_parametro_final[:2], rut_con_parametro_final[2:5], rut_con_parametro_final[5:8], rut_con_parametro_final[9:])
                 return rut_con_parametro_final_formateado
@@ -280,9 +322,7 @@ class Osint:
             ██████  ███████ ██ ██   ████    ██ ███████  ██████ ███████ 
                                                                        
                                        """)                     
-
-
-
+# El Progama inicia aca 
 def main():
     # Creando una instancia de las clases
     mifunciones = Osint.Funciones()
@@ -304,20 +344,31 @@ def main():
         opcion = input("Selecciona una opción: ")
 
         if opcion == "1":
+            time.sleep(0.8)
+            mifunciones.limpiar_pantalla()
+            dibujo.osint_cl()
             rut_validado = mifunciones.validar_rut()
             mifunciones.buscador_de_rut(rut_validado)
+            input("Presiona Enter para continuar...")
+            time.sleep(0.8)
             mifunciones.continuar_buscando_rut()
 
         elif opcion == "2":
             mifunciones.limpiar_pantalla()
             time.sleep(0.8)
-            print("Tu número generado al azar es", crear.crear_rut_aleatorio())
+            dibujo.osint_cl()
+            print("Tu Rut generado al azar es", crear.crear_rut_aleatorio())
+            time.sleep(0.8)
             mifunciones.continuar(crear.crear_rut_aleatorio)
 
         elif opcion == "3":
             mifunciones.limpiar_pantalla()
-            print("Tu número generado al azar es", crear.crear_numero_con_parametros())
-            time.sleep(4)
+            time.sleep(0.8)
+            dibujo.osint_cl()   
+            rut_generado = crear.crear_numero_con_parametros()
+            print("Tu número generado con parámetros es", rut_generado)
+            input("Presiona Enter para continuar...")
+            dibujo.osint_cl()
             mifunciones.continuar(crear.crear_numero_con_parametros)
 
         elif opcion == "4":
