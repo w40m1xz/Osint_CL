@@ -14,14 +14,23 @@ import os
 
 #Progama 2.1
 
-class Osint:
+class Osint:    
     class Funciones: 
-      def buscador_de_rut(self, rut):
+      def continuar_buscando_rut(self):
+        while True:
+            respuesta = input("¿Quieres buscar otro RUT? (si/no): ")
+            if respuesta == 'si':
+              rut_verificado= self.validar_rut()
+              self.buscador_de_rut(rut_verificado)
+            if respuesta.lower() != 'si':
+                print("¡Hasta luego!")
+                break
+      def buscador_de_rut(self,rut):
         url = 'https://www.nombrerutyfirma.com/rut'
         headers = {
             'Host': 'www.nombrerutyfirma.com',
             'Cookie': 'cf_clearance=DuWwsI1Jk_E5A0UBh_tPzpwyCANkrz.mbNv9NzE286E-1709514440-1.0.1.1-Gofv6W1hJ17Hop9dIpvsVSBJFRvJorbhCHQ64v3jiS7q_2CeQbJYKWnu0uJKdT_qfKFdcQi7M6.yBpgafdI1Ow',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0',
+            'User-Agent': 'Mozilla/5.0 (compatible; Konqueror/4.0; Linux) KHTML/4.0.5 (like Gecko)',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
             'Accept-Language': 'es-CL,es;q=0.8,en-US;q=0.5,en;q=0.3',
             'Accept-Encoding': 'gzip, deflate, br',
@@ -88,15 +97,15 @@ class Osint:
                     os.remove('respuesta.html')
             else:
                 print("Error al realizar la solicitud:", response.status_code)
-      def validar_rut(self, rut):   
-          #Expresion regular que valida el formato rut x.xxx.xxx-k
-          patron_rut = r'^(25|[1-9]|[1][0-9]|2[0-5])\.\d{3}\.\d{3}-[\dkK0-9]$'
-              # Comprobar si el RUT coincide con el patrón
-          if re.match(patron_rut, rut):
-             return True
-            
-          else:
-             return False    
+      def validar_rut(self):
+        while True:
+            rut = input("Ingresa un RUT en el formato xx.xxx.xxx-k (Solo números y último dígito 0-9 o K): ")
+            patron_rut = r'^(25|[1-9]|[1][0-9]|2[0-5])\.\d{3}\.\d{3}-[\dkK0-9]$'
+            if re.match(patron_rut, rut):
+                break
+            else:
+                print("El RUT ingresado no tiene el formato correcto. Inténtalo nuevamente.")  
+        return rut
       def limpiar_pantalla(self):
             sistema_operativo = os.name
             if sistema_operativo == 'nt':  # Windows
@@ -110,25 +119,13 @@ class Osint:
             while True:
              respuesta = input("¿Quieres generar otro rut? (si/no): ")
              if respuesta.lower() == 'si':
-                 print("Tu número generado al azar es", funcion_a_escoger())
+                 print("Tu Rut generado  es", funcion_a_escoger())
                  True
              elif respuesta.lower() == 'no':
                   print("¡Hasta luego!")
                   break
              else:
                  print("Respuesta inválida. Por favor, responde 'si' para continuar o 'no' para salir.")
-      def continuar_buscando_rut(self,rut):
-        while True:
-            respuesta = input("¿Quieres buscar otro RUT? (si/no): ")
-            if respuesta.lower() != 'si':
-                print("¡Hasta luego!")
-                break
-            rut = input("Ingresa un RUT que deseas buscar: ")
-            if not self.validar_rut(rut):
-                print("El RUT ingresado no tiene el formato correcto. Debe ser en formato x.xxx.xxx-x.")
-                rut = input("Ingresa un RUT que deseas buscar: ")
-                False
-            self.buscador_de_rut(rut)
       def mostrar_menu(self):
             print("Menú:")
             print("1. Buscar un rut")
@@ -284,68 +281,54 @@ class Osint:
                                                                        
                                        """)                     
 
-        
-# Inicio del progama
-    
+
+
 def main():
- # Creando una instancia de las clases
- mifunciones= Osint.Funciones()
- crear = Osint.Crear()
- dibujo = Osint.Dibujos()
- signal.signal(signal.SIGINT, mifunciones.control_De_salida)
- # Inicio
- dibujo.dibujo_calavera()
- time.sleep(0.4)
- dibujo.by_ruisu()
- time.sleep(2)
- mifunciones.limpiar_pantalla()
- dibujo.osint_cl()
- mifunciones.mostrar_menu()
+    # Creando una instancia de las clases
+    mifunciones = Osint.Funciones()
+    crear = Osint.Crear()
+    dibujo = Osint.Dibujos()
+    signal.signal(signal.SIGINT, mifunciones.control_De_salida)
+    
+    while True:  # Bucle principal para mantener el menú en ejecución
+        # Inicio del menú
+        dibujo.dibujo_calavera()
+        time.sleep(0.4)
+        dibujo.by_ruisu()
+        time.sleep(2)
+        mifunciones.limpiar_pantalla()
+        dibujo.osint_cl()
+        mifunciones.mostrar_menu()
 
- # Seleciona una opcion
- opcion = input("Selecciona una opción: ")
- while True:
+        # Selección de opción
+        opcion = input("Selecciona una opción: ")
 
-  # Opción 1: Buscar un rut
         if opcion == "1":
-            while True:
-               rut = input("Ingresa un RUT en el formato xx.xxx.xxx-k(Solo numeros y ultimo digito 0-9 o K): ")
-               if mifunciones.validar_rut(rut):
-                  mifunciones.buscador_de_rut(rut)
-                  mifunciones.continuar_buscando_rut(rut)
-                  return rut
-               else:
-                  print("El RUT ingresado no es válido. Asegúrate de que cumpla con el formato especificado.")
-                  continue  # Llama nuevamente al inicio del bucle para solicitar otro RUT
-   # Opción 2: Generar un rut aleatorio
+            rut_validado = mifunciones.validar_rut()
+            mifunciones.buscador_de_rut(rut_validado)
+            mifunciones.continuar_buscando_rut()
+
         elif opcion == "2":
             mifunciones.limpiar_pantalla()
             time.sleep(0.8)
             print("Tu número generado al azar es", crear.crear_rut_aleatorio())
             mifunciones.continuar(crear.crear_rut_aleatorio)
-            break
-  # Opción 3: Generar un rut con parametros
-        elif opcion == "3":
-             mifunciones.limpiar_pantalla()
-             print("Tu número generado al azar es", crear.crear_numero_con_parametros())
-             #mifunciones.continuar(crear.crear_numero_con_parametros)
-             pass
 
- # Opción 4: 
+        elif opcion == "3":
+            mifunciones.limpiar_pantalla()
+            print("Tu número generado al azar es", crear.crear_numero_con_parametros())
+            time.sleep(4)
+            mifunciones.continuar(crear.crear_numero_con_parametros)
+
         elif opcion == "4":
             pass  # Implementa la lógica para esta opción aquí
 
-        # Opción 5: Salir
         elif opcion == "5":
             print("¡Hasta luego!")
-            break  # Salir del bucle después de seleccionar la Opción 4
+            break  # Salir del bucle principal y terminar el programa
 
         else:
             print("Opción inválida. Por favor, selecciona una opción válida.")
-
-  
-       # Funciona 1 y 2 pero no vuelven al menu
-
+            mifunciones.limpiar_pantalla()
 if __name__ == "__main__":
     main()
-
