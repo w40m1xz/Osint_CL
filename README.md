@@ -1,4 +1,5 @@
 # Osint_Cl
+![image](https://github.com/w40m1xz/Osint_CL/assets/154865378/2691f126-c037-4688-842a-e4955734e050)
 
 Es un proyecto para buscar rut y otras cosas interesantes
 
